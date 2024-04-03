@@ -3,13 +3,16 @@
 App Name: Eventify 
 Group Members: Sanah Mohammed, Amy Mehta, Zeva Siddiqui 
 
-App features 
-1. Event Feed: Users will be able to browse through a feed of events posted by other users. Each event card will display details such as the event name, date, time, location, and a brief description.
+Project Goals and Features:
 
-2. Event Posting: Users can create and post their own events to share with others. When creating an event, users will input details such as the event name, date, time, location, description, and possibly a cover image.
+The primary goal of Eventify is to provide users with a seamless platform to discover, share, and engage with various events happening around them. The key features of Eventify include:
 
-3. Calendar Integration: Eventify will integrate with the user's calendar app, allowing them to easily add events from the feed to their personal calendar. This feature enhances the user experience by providing a seamless way to keep track of upcoming events.
+1. Event Discovery: Users can easily browse through a feed of events posted by other users based on their location and interests.
 
-4. Friend Interaction: Users can add friends within the app and receive notifications about events posted by their friends. This encourages social interaction and fosters a sense of community within the platform.
+2. Event Creation: Users have the ability to create and post their own events, allowing them to share their experiences with others.
 
-5. Commenting and Feedback: Users can leave comments and feedback on events they attend. This feature enables users to share their experiences, ask questions, and provide valuable insights to event organizers and other attendees.
+3. Calendar Integration: Eventify seamlessly integrates with the user's calendar app, enabling them to add events from the feed to their personal calendar with just a few taps.
+
+4. Social Interaction: Users can connect with friends within the app and receive notifications about events posted by their friends. This fosters social engagement and encourages users to participate in events together.
+
+5. Commenting and Feedback: Event attendees can leave comments and feedback on events they attend, providing valuable insights to event organizers and enhancing the overall event experience for everyone.
