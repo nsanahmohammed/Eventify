@@ -1,0 +1,131 @@
+
+const colors = {
+  primary: '#cdb4db',
+  secondary: '#ffc8dd',
+  accent: '#ffafcc',
+  lightBlue: '#bde0fe',
+  darkBlue: '#a2d2ff',
+};
+
+class Eventify extends HTMLElement {
+  constructor() {
+    super();
+    this.events = [
+      { title: 'Meeting', date: '2024-02-15', time: '10:00 AM' },
+      { title: 'Lunch with friends', date: '2024-02-16', time: '12:30 PM' },
+    ];
+
+    this.newEventTitle = '';
+    this.newEventDate = '';
+    this.newEventTime = '';
+    this.activeTab = 'My Events';
+
+    this.attachShadow({ mode: 'open' });
+    this.render();
+  }
+
+  addEvent() {
+    if (this.newEventTitle && this.newEventDate && this.newEventTime) {
+      const newEvent = {
+        title: this.newEventTitle,
+        date: this.newEventDate,
+        time: this.newEventTime,
+      };
+      this.events.push(newEvent);
+      this.newEventTitle = '';
+      this.newEventDate = '';
+      this.newEventTime = '';
+      this.render();
+    }
+  }
+
+  renderEvents() {
+    const eventList = this.activeTab === 'My Events' ? this.events : [];
+
+    const eventListDiv = document.createElement('div');
+    eventListDiv.setAttribute('style', 'flex: 1; padding: 10px;');
+
+    eventList.forEach((event, index) => {
+      const eventItem = document.createElement('div');
+      eventItem.setAttribute('style', `background-color: ${colors.primary}; padding: 10px; margin-bottom: 10px; border-radius: 5px;`);
+      eventItem.innerHTML = `
+        <div style="font-weight: bold; margin-bottom: 5px;">${event.title}</div>
+        <div>Date: ${event.date}</div>
+        <div>Time: ${event.time}</div>
+      `;
+      eventListDiv.appendChild(eventItem);
+    });
+
+    return eventListDiv;
+  }
+
+  render() {
+    const containerDiv = document.createElement('div');
+    containerDiv.setAttribute('style', `flex: 1; background-color: ${colors.lightBlue};`);
+
+    containerDiv.appendChild(this.renderEvents());
+
+    const addEventContainerDiv = document.createElement('div');
+    addEventContainerDiv.setAttribute('style', `padding: 20px; border-top: 1px solid ${colors.primary};`);
+
+    const inputTitle = document.createElement('input');
+    inputTitle.setAttribute('type', 'text');
+    inputTitle.setAttribute('placeholder', 'Event Title');
+    inputTitle.setAttribute('style', 'height: 40px; border: 1px solid ' + colors.primary + '; margin-bottom: 10px; padding: 0 10px;');
+    inputTitle.value = this.newEventTitle;
+    inputTitle.addEventListener('input', (event) => {
+      this.newEventTitle = event.target.value;
+    });
+    addEventContainerDiv.appendChild(inputTitle);
+
+    const inputDate = document.createElement('input');
+    inputDate.setAttribute('type', 'text');
+    inputDate.setAttribute('placeholder', 'Event Date (YYYY-MM-DD)');
+    inputDate.setAttribute('style', 'height: 40px; border: 1px solid ' + colors.primary + '; margin-bottom: 10px; padding: 0 10px;');
+    inputDate.value = this.newEventDate;
+    inputDate.addEventListener('input', (event) => {
+      this.newEventDate = event.target.value;
+    });
+    addEventContainerDiv.appendChild(inputDate);
+
+    const inputTime = document.createElement('input');
+    inputTime.setAttribute('type', 'text');
+    inputTime.setAttribute('placeholder', 'Event Time');
+    inputTime.setAttribute('style', 'height: 40px; border: 1px solid ' + colors.primary + '; margin-bottom: 10px; padding: 0 10px;');
+    inputTime.value = this.newEventTime;
+    inputTime.addEventListener('input', (event) => {
+      this.newEventTime = event.target.value;
+    });
+    addEventContainerDiv.appendChild(inputTime);
+
+    const addButton = document.createElement('button');
+    addButton.textContent = 'Add Event';
+    addButton.setAttribute('style', `background-color: ${colors.darkBlue}; color: ${colors.lightBlue}; padding: 10px; border: none; border-radius: 5px; margin-top: 10px; cursor: pointer;`);
+    addButton.addEventListener('click', () => this.addEvent());
+    addEventContainerDiv.appendChild(addButton);
+
+    containerDiv.appendChild(addEventContainerDiv);
+
+    const navbarDiv = document.createElement('div');
+    navbarDiv.setAttribute('style', `display: flex; justify-content: center; align-items: center; background-color: ${colors.primary}; height: 50px;`);
+
+    const myEventsButton = document.createElement('button');
+    myEventsButton.textContent = 'My Events';
+    myEventsButton.setAttribute('style', `flex: 1; justify-content: center; align-items: center; padding: 10px; border: none; cursor: pointer;`);
+    myEventsButton.addEventListener('click', () => { this.activeTab = 'My Events'; this.render(); });
+    navbarDiv.appendChild(myEventsButton);
+
+    const friendsButton = document.createElement('button');
+    friendsButton.textContent = 'Friends';
+    friendsButton.setAttribute('style', `flex: 1; justify-content: center; align-items: center; padding: 10px; border: none; cursor: pointer;`);
+    friendsButton.addEventListener('click', () => { this.activeTab = 'Friends'; this.render(); });
+    navbarDiv.appendChild(friendsButton);
+
+    containerDiv.appendChild(navbarDiv);
+
+    this.shadowRoot.innerHTML = '';
+    this.shadowRoot.appendChild(containerDiv);
+  }
+}
+
+customElements.define('eventify-app', Eventify);
